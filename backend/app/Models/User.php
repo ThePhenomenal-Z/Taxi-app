@@ -19,8 +19,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
+        'phoneNumber',
+        'login_code',
     ];
 
     /**
@@ -29,17 +29,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    public function driver(){
+        return $this->hasOne(Driver::class);
+    }
+    public function trips(){
+        return $this->hasMany(Trip::class);
+    }
 }
