@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class uRegisterRequest extends FormRequest
@@ -25,14 +25,14 @@ class uRegisterRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'phoneNumber'=>'required|unique|Numeric',
+            'phoneNumber'=>'required|unique:users|Numeric',
         ];
     }
         // validation error handeling
-        protected function failedValidation(Validator $validator)
-        {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors()
-            ], 422));
-        }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors()
+        ], 422));
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Models\User;
+use App\Notifications\loginVerification;
 use Illuminate\Http\Request;
 use App\Http\Requests\loginRequest;
 use App\Http\Requests\uLoginRequest;

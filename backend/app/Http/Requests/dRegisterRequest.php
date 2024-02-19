@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class dRegisterRequest extends FormRequest
@@ -24,12 +24,12 @@ class dRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phoneNumber'=>'required|unique|Numeric',
+            'phoneNumber'=>'required|unique:users|Numeric',
             'name'=>'required',
-            'year'=>'required',
+            'year'=>'required|Numeric',
             "type"=>'required',
             "model"=>'required',
-            "license_plate"=>'required',
+            "license_plate"=>'required|unique:drivers',
             "color"=>'required',
         ];
     }
