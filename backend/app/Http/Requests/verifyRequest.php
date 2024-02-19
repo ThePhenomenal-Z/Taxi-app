@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class loginRequest extends FormRequest
+class verifyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,15 @@ class loginRequest extends FormRequest
     {
         return [
             'phoneNumber'=>'required|Numeric',
+            'login_code'=>'required|Numeric|between:111111,999999',
             'isDriver'=>'required|boolean'
         ];
     }
-        // validation error handeling
-        protected function failedValidation(Validator $validator)
-        {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors()
-            ], 422));
-        }
+    // validation error handeling
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors()
+        ], 422));
+    }
 }
