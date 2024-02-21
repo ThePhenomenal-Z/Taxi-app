@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phoneNumber')->unique();
             $table->string('login_code')->nullable();
+            $table->string('telegram_chat_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

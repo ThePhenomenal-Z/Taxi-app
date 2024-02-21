@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -27,6 +30,24 @@ class loginRequest extends FormRequest
             'phoneNumber'=>'required|Numeric',
             'isDriver'=>'required|boolean'
         ];
+    }
+    public function saveOrUpdatePhoneNumber($phoneNumber)
+    {
+        // Create an instance of PhoneNumberUtil
+        $phoneUtil = PhoneNumberUtil::getInstance();
+
+        try {
+            // Parse the phone number
+            $parsedNumber = $phoneUtil->parse($phoneNumber, '00963');
+
+            // Format the phone number with the static country code
+            $formattedNumber = $phoneUtil->format($parsedNumber, PhoneNumberFormat::E164);
+
+            return $formattedNumber;
+        } catch (\libphonenumber\NumberParseException $e) {
+            // Handle the exception if the phone number is invalid
+            return $phoneNumber;
+        }
     }
         // validation error handeling
         protected function failedValidation(Validator $validator)

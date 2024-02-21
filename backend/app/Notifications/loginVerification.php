@@ -2,12 +2,13 @@
 
 namespace App\Notifications;
 
+use Telegram\Bot\Api;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioSmsMessage;
 use Illuminate\Notifications\Messages\MailMessage;
+use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class LoginVerification extends Notification
 {
@@ -16,9 +17,11 @@ class LoginVerification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    protected $verificationCode;
+
+    public function __construct($verificationCode)
     {
-        //
+        $this->verificationCode = $verificationCode;
     }
 
     /**
@@ -26,21 +29,17 @@ class LoginVerification extends Notification
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
+    public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [TelegramChannel::class];
     }
 
-    public function toTwilio($notifiable)
+    public function toTelegram($notifiable)
     {
-        $loginCode = rand(111111, 999999);
+        $verificationCode = $this->verificationCode;
 
-        $notifiable->update([
-            'login_code' => $loginCode
-        ]);
-
-        return (new TwilioSmsMessage())
-            ->content("Your Andrewber login code is {$loginCode}, don't share this with anyone!");
+        return TelegramMessage::create()
+            ->content('Your verification code is: ' . $verificationCode);
     }
 
     /**
