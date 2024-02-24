@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DriverController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/login',[LoginController::class,'login']);
-Route::post('/login/verify',[LoginController::class,'verify']);
-Route::post('/uregister',[LoginController::class,'userRegister']);
-Route::post('/dregister',[LoginController::class,'driverRegister']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login/verify', [LoginController::class, 'verify']);
+Route::post('/uregister', [LoginController::class, 'userRegister']);
+Route::post('/dregister', [LoginController::class, 'driverRegister']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('driver', DriverController::class);
+    Route::put('/driver', [DriverController::class, 'updateDriver']);
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('user', UserController::class);
+});
