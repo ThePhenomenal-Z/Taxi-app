@@ -30,4 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user', UserController::class);
+    Route::put('/user', [UserController::class, 'updateUser']);
 });
