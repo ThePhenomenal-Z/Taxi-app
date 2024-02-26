@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user', UserController::class);
     Route::put('/user', [UserController::class, 'updateUser']);
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('trip', [TripController::class,'store']);
+    Route::post('/trip/{trip}/accept', [TripController::class, 'accept']);
+    Route::post('/trip/{trip}/start', [TripController::class, 'start']);
+    Route::post('/trip/{trip}/complete', [TripController::class, 'complete']);
+    Route::post('/trip/{trip}/location', [TripController::class, 'updateLocation']);
 });
