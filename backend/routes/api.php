@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('trip', [TripController::class,'store']);
+    Route::get('/trip/{trip}', [TripController::class,'show']);
     Route::post('/trip/{trip}/accept', [TripController::class, 'accept']);
     Route::post('/trip/{trip}/start', [TripController::class, 'start']);
     Route::post('/trip/{trip}/complete', [TripController::class, 'complete']);

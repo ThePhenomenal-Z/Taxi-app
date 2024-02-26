@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Driver::class);
-            $table->enum('status', ['waiting', 'started', 'completed'])->default('waiting');
+            $table->foreignIdFor(Driver::class)->nullable();
+            $table->enum('status', ['waiting','accepted', 'started', 'completed'])->default('waiting');
             $table->json('origin')->nullable();
             $table->json('destination')->nullable();
             $table->string('destination_name')->nullable();
