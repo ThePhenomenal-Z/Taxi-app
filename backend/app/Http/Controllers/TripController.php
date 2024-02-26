@@ -14,7 +14,7 @@ class TripController extends Controller
         $validatedData = $request->validated();
         json_decode($validatedData["origin"]);
         json_decode($validatedData["destination"]);
-        $validatedData["user_id"]=;
+        $validatedData["user_id"]= auth()->id();
         $trip = Trip::create($validatedData);
         return new TripResource($trip);
     }
