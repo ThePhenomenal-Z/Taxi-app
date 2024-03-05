@@ -1,0 +1,1 @@
+ D:\\projects\\Taxi-app\\frontend\\.dart_tool\\flutter_build\\d93218592f6ee1ef4057993ed4032533\\native_assets.yaml: 
